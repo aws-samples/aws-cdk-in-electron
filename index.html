@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; img-src * 'self' data:; script-src 'self' ; style-src 'self' 'unsafe-inline'; connect-src * node: data: blob: filesystem:;">
+  <link href="./assets/pico.min.css" rel="stylesheet">
+  <link href="./assets/styles.css" rel="stylesheet">
+  <link href="./assets/square-jelly-box.css" rel="stylesheet">
+  <title>AWS CDK (&amp; SDK) in Electron</title>
+
+</head>
+
+<body>
+  <h1>AWS CDK (&amp; SDK) in Electron</h1>
+  <p>This Electron app is a proof of concept that demonstrates the ability to build an Electron app that can operate on
+    an AWS account using both SDK and CDK. It provides a model for deploying pre-built CDK apps, and for composing and
+    deploying
+    a CDK app on the fly. It can also do CDK bootstrapping, deploy standard CloudFormation templates and run SDK
+    commands.</p>
+
+  <hr id="error-divider" />
+
+  <div id="error-block">
+    <p id="errors"></p>
+  </div>
+  <hr />
+
+  <div id="credentials-block">
+    <h2>Credentials</h2>
+    <p>Paste your credentials here. You can provide either an IAM user's AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY, or
+      temporary credentials that include the AWS_SESSION_TOKEN. It's not necessary to add "export" to each line, but
+      it's ok if you do.</p>
+    <textarea id="pasted-credentials" placeholder="export AWS_ACCESS_KEY_ID=ASIA....
+export AWS_SECRET_ACCESS_KEY=Gv9TzY16Hm9....
+export AWS_SESSION_TOKEN=IQoJb3JpZ2luX2VjEDIa....
+    "></textarea>
+    <p><b>OR</b></p>
+    <p>
+      <label for="access-key-id">Access Key ID: </label><input id="access-key-id" type="text" size="20"
+        placeholder="ASIAZFGZEKEXAMPLE...">
+    </p>
+    <p><label for="secret-access-key">Secret Access Key: </label><input id="secret-access-key" type="text" size="40"
+        placeholder="2HiomfHnO5lZe8YWTevkuoL+75+K3exAMPLe..."></p>
+    <p><button id="submit-credentials-button">Submit Credentials</button></p>
+  </div>
+  <div id="loading-block">
+    <p>Loading regions...please wait...</p>
+  </div>
+  <div id="commands-block">
+    <p>Select the region you want to work in first.</p>
+    <div><label for="region-select">Available regions: </label> <select id="region-select"></select></div>
+    <div>
+      <h2>SDK commands</h2>
+      <p>This button will run an S3 list-buckets SDK command.</p>
+      <p><button id="get-buckets-button">List Buckets</button></p>
+      <div id="sdk-output" class="logs">
+        <h3>Output from SDK</h3>
+        <div class="output" id="sdk-result"></div>
+      </div>
+    </div>
+    <hr />
+    <div>
+      <div style="float:right; width: 40%; margin: 0.9rem 0rem;" class="logs">
+        <h3>Deployment Status</h3>
+        <div
+          title="All the stacks that get deployed using this app, including the remotely deployed ones, will report their state here."
+          class="output" id="cf-stack-states"></div>
+        <h3>Stack Outputs</h3>
+        <div title="Stack outputs" class="output" id="cf-stack-outputs"></div>
+        <h3>DeployStack Response</h3>
+        <div title="Output from the CloudFormation deployStack command that is performed in this app will appear here."
+          class="output" id="deploystack-output"></div>
+      </div>
+      <div style="float:left; width: 55%">
+        <h2>CloudFormation Template Deployment</h2>
+        <div><label for="template-select">Available templates: </label><select id="template-select"></select></div>
+        <p><button id="deploy-template-button">Deploy Template</button></p>
+        <h2>CDK App Operations</h2>
+        <p>Bootstrap CDK will bootstrap the account for the chosen region.</p>
+        <button id="bootstrap-cdk-button">Bootstrap CDK</button>
+        <p>Create a simple stack in code and deploy it (see source in preload.js). Specify a bucket name that will be
+          used to name the bucket that will be created by CDK.</p>
+        <p style="display: inline-block"><input id="create-bucket-with-cdk"> <button style="display: inline-block"
+            id="create-cdk-stack-button">Create
+            Dynamic CDK App</button></p>
+        <p>Dynamically compose CodePipeline pipelines for CDK apps bundled into the Electron app.</p>
+        <button id="create-cdk-app-pipeline-button">Create CDK App Pipeline stack</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="change-credentials-block" style="clear: both">
+    <hr />
+    <h2>Current credentials</h2>
+    <p>These credentials are currently being used:</p>
+    <p id="debug" class="output"></p>
+    <p><button id="change-credentials-button">Change Credentials</button></p>
+  </div>
+
+  <footer style="margin-top: 0px; padding-top: 0px;">This app is using Node.js <span id="node-version"></span>,
+    Chromium <span id="chrome-version"></span>,
+    and Electron <span id="electron-version"></span>.</footer>
+
+  <!-- You can also require other files to run in this process -->
+  <script src="./renderer.js"></script>
+</body>
+
+</html>

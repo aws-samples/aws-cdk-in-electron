@@ -1,0 +1,19 @@
+{
+    "Stacks": [
+        {
+            "name": "HelloStack2",
+            "hasOutputs": false
+        }
+    ],
+    "CodeBuildPolicy": {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "AllowAllAccess",
+                "Effect": "Allow",
+                "Action": "*",
+                "Resource": "*"
+            }
+        ]
+    }
+}

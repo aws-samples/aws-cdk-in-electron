@@ -1,0 +1,51 @@
+{
+    "Statement": [
+        {
+            "Action": [
+                "iam:PassRole"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Condition": {
+                "StringEqualsIfExists": {
+                    "iam:PassedToService": [
+                        "cloudformation.amazonaws.com",
+                        "elasticbeanstalk.amazonaws.com",
+                        "ec2.amazonaws.com",
+                        "ecs-tasks.amazonaws.com"
+                    ]
+                }
+            }
+        },
+        {
+            "Action": [
+                "cloudwatch:*",
+                "s3:*",
+                "sns:*",
+                "cloudformation:*"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "codebuild:BatchGetBuilds",
+                "codebuild:StartBuild",
+                "codebuild:BatchGetBuildBatches",
+                "codebuild:StartBuildBatch"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "states:DescribeExecution",
+                "states:DescribeStateMachine",
+                "states:StartExecution"
+            ],
+            "Resource": "*"
+        }
+    ],
+    "Version": "2012-10-17"
+}

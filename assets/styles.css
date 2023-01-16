@@ -1,0 +1,134 @@
+/* styles.css */
+
+/* Add styles here to customize the appearance of your app */
+
+
+html {
+    font-family: sans-serif;
+}
+
+body {
+    margin: 1rem;
+    font-family: sans-serif;
+    width: 95%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-bottom: .2rem;
+    margin-top: .2rem;
+    font-family: sans-serif;
+}
+
+h1 {
+    font-size: 1.6rem;
+}
+
+h2 {
+    font-size: 1.3rem;
+}
+
+h3 {
+    font-size: 1rem;
+}
+
+p {
+    margin-bottom: .3rem;
+    margin-top: .3rem;
+    font-size: 1rem;
+}
+
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-style: dashed;
+    border-color: grey;
+    border-width: 1px;
+}
+
+#error-block {
+    color: red;
+    font-weight: bold;
+}
+
+footer {
+    font-size: smaller;
+    font-style: italic;
+}
+
+.output {
+    border-radius: 5px;
+    border: 1px solid grey;
+    padding: 10px;
+    background-color: #fafafa;
+    font-size: smaller;
+    margin: .3rem .0rem .9rem;
+}
+
+.list-output {
+    border-radius: 5px;
+    border: 1px solid grey;
+    padding: 5px;
+    background-color: #f0f0f0;
+}
+
+.logs {
+    border-radius: 5px;
+    border: 1px dotted;
+    padding: 0.3rem 0.6rem;
+    background-color: rgb(15 149 193 / 22%);
+}
+
+p {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    color: inherit;
+    font-weight: inherit;
+}
+
+.log-line {
+    font-size: smaller;
+}
+
+button,
+select {
+    max-width: fit-content;
+    display: inline;
+    margin: .2rem .6rem .6rem 0rem;
+    padding: 0.3rem 0.6rem;
+}
+
+#error-block {
+    font-weight: bold;
+    margin-left: 3px;
+    color: black;
+    border-radius: 5px;
+    border: 1px solid rgb(174, 89, 89);
+    padding: 10px;
+    background-color: #fecfcf;
+}
+
+#pasted-credentials {
+    width: 100%;
+    margin-bottom: 0px;
+    line-height: 2.6ex;
+    height: 11ex;
+}
+
+label {
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 0.6rem;
+}
+
+input {
+    width: 45% !important;
+    max-width: fit-content;
+    padding: 0.3rem 0.6rem !important;
+    height: fit-content !important;
+}

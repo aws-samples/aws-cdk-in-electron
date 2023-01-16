@@ -1,0 +1,13 @@
+# buildspec.yml
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 16
+    commands:
+      - npm install -g aws-cdk@latest
+      - npm install
+  build:
+    commands:
+      - npm run build
+      - cdk deploy

@@ -1,0 +1,72 @@
+{
+    "name": "aws-electron-sdk-cdk",
+    "version": "1.0.0",
+    "description": "A demonstration of using AWS SDK and AWS CDK inside an Electron application.",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron-forge start",
+        "package": "electron-forge package",
+        "make": "electron-forge make"
+    },
+    "keywords": [
+        "Electron",
+        "AWS",
+        "SDK",
+        "CDK",
+        "PoC"
+    ],
+    "author": "guymor@amazon.com",
+    "license": "",
+    "devDependencies": {
+        "@electron-forge/cli": "^6.0.4",
+        "@electron-forge/maker-deb": "^6.0.4",
+        "@electron-forge/maker-rpm": "^6.0.4",
+        "@electron-forge/maker-squirrel": "^6.0.4",
+        "@electron-forge/maker-zip": "^6.0.4",
+        "electron": "^22.0.1",
+        "electron-rebuild": "^3.2.9"
+    },
+    "dependencies": {
+        "@aws-cdk/cloudformation-diff": "^2.59.0",
+        "@aws-cdk/cx-api": "^2.59.0",
+        "archiver": "^5.3.1",
+        "aws-cdk": "^2.59.0",
+        "aws-cdk-lib": "^2.59.0",
+        "aws-sdk": "^2.1292.0",
+        "cdk-assets": "^2.33.0",
+        "constructs": "^10.1.43",
+        "electron-root-path": "^1.1.0",
+        "electron-squirrel-startup": "^1.0.0",
+        "promptly": "^3.2.0",
+        "proxy-agent": "^5.0.0",
+        "wrap-ansi": "^7.0.0",
+        "yaml": "^1.10.2"
+    },
+    "config": {
+        "forge": {
+            "packagerConfig": {},
+            "makers": [
+                {
+                    "name": "@electron-forge/maker-squirrel",
+                    "config": {
+                        "name": "electron_quick_start"
+                    }
+                },
+                {
+                    "name": "@electron-forge/maker-zip",
+                    "platforms": [
+                        "darwin"
+                    ]
+                },
+                {
+                    "name": "@electron-forge/maker-deb",
+                    "config": {}
+                },
+                {
+                    "name": "@electron-forge/maker-rpm",
+                    "config": {}
+                }
+            ]
+        }
+    }
+}

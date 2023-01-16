@@ -1,0 +1,8 @@
+node_modules
+.DS_Store
+out/
+apps/pipeline*
+apps/wordpress*
+.vscode
+.github
+apps/*.zip
