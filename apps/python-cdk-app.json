@@ -1,0 +1,19 @@
+{
+    "Stacks": [
+        {
+            "name": "PythonCdkStack",
+            "hasOutputs": true
+        }
+    ],
+    "CodeBuildPolicy": {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "AllowAllAccess",
+                "Effect": "Allow",
+                "Action": "*",
+                "Resource": "*"
+            }
+        ]
+    }
+}

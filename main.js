@@ -14,7 +14,6 @@ function createWindow() {
     width: !app.isPackaged ? 1400 : 900,
     height: 800,
     webPreferences: {
-      // nodeIntegration: true,
       sandbox: false,
       preload: path.join(__dirname, 'preload.js')
     }
@@ -27,11 +26,6 @@ function createWindow() {
   if (!app.isPackaged) {
     mainWindow.webContents.openDevTools()
   }
-
-  // mainWindow.webContents.on('new-window', function (e, url) {
-  //   e.preventDefault();
-  //   require('electron').shell.openExternal(url);
-  // });
 
 }
 

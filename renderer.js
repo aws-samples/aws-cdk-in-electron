@@ -52,7 +52,7 @@ const updateStackEventDisplay = function (stacks) {
       htmlOutput += bouncyBox;
       console.log("event is for " + stackStates[thisStack].LogicalResourceId);
     }
-    htmlOutput += ` (<a target="_blank" href="https://${region}.console.aws.amazon.com/cloudformation/home?region=${region}#/stacks/stackinfo?stackId=${stackStates[thisStack].StackId}">Console</a>)<br/>`;
+    htmlOutput += ` (<a onclick="openConsole('https://${region}.console.aws.amazon.com/cloudformation/home?region=${region}#/stacks/stackinfo?stackId=${stackStates[thisStack].StackId}')">Console</a>)<br/>`;
   }
 
   if (previousStatusReport !== htmlOutput) {
@@ -272,6 +272,10 @@ function showStacksProgressFunc() {
   for (stack in stacks) {
     window.getStackEvents(stack, cfnStates);
   }
+}
+
+function openConsole(url) {
+  window.openInBrowser(url);
 }
 
 populateTemplateSelect();

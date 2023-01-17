@@ -14,11 +14,15 @@ const { contextBridge } = require('electron');
 
 const stacks = {};
 
-process.env.ELECTRON_NO_ATTACH_CONSOLE = true;
+// process.env.ELECTRON_NO_ATTACH_CONSOLE = true;
 //set default region
 const REGION = process.env.AWS_DEFAULT_REGION || 'us-east-1';
 sdk.config.update({ region: REGION });
 
+function openInBrowser(url) {
+  require('electron').shell.openExternal(url);
+}
+contextBridge.exposeInMainWorld('openInBrowser', (url) => openInBrowser(url))
 /* 
 * When the user submits credentials in the UI, this gets called
 */
