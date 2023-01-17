@@ -75,7 +75,11 @@ The `Create Simple CDK stack` button will compose a simple CDK stack called `ele
 
 `Create CDK App Pipeline stack` will look in the `apps` directory and will create a deployment pipeline using CodePipeline for each zipped CDK project it finds. The pipelines will be deployed in a CDK stack called `cdk-app-delivery-pipeline-stack` and it will deploy into whichever region you have chosen.
 
-Zipped CDK projects must contain a `buildspec.yml` at the archive root that instructs CodeBuild how to deploy each app. You can deploy CDK apps written in different languages by specifying different `runtime-versions` in the install phase, eg this is a sample `buildspec.yml` that will deploy a single-stack CDK project written in TypeScript:
+Zipped CDK projects must contain a `buildspec.yml` at the archive root that instructs CodeBuild how to deploy each app. 
+
+> Note that you can install CDK apps written in any language that can be deployed using CodeBuild.
+
+Deploy CDK apps written in different languages by specifying different `runtime-versions` in the install phase, eg this is a sample `buildspec.yml` that will deploy a single-stack CDK project written in TypeScript:
 
 ```
 # buildspec.yml
@@ -93,7 +97,7 @@ phases:
       - cdk deploy
 ```
 
-There are 3 sample apps you can use to test this in the `apps` folder. Zip the contents (not the folder) of the CDK project (without any locally installed node_modules or python env directories) and place the archive at the root of the `apps` directory, eg
+There are four sample apps you can use to test this in the `apps` folder, each with a working `buildspec.yaml`. Zip the contents (not the folder) of the CDK project (without any locally installed node_modules or python env directories) and place the archive at the root of the `apps` directory, eg
 
 ```
 apps/
@@ -103,14 +107,20 @@ apps/
 ├── app2.json
 ├── app3.zip
 ├── app3.json
+├── python-cdk-app.zip
+├── python-cdk-app.json
 ```
 
-Note also that you can use a JSON file to specify an IAM policy that will be used when deploying the CDK project. To do this, provide a JSON manifest file with the same name as the project's zip file and include within it the IAM policy for deploying the matching project. The JSON document will be used to create the service role that will be assumed by CodeBuild, and it also specifies the stack names that will be tracked by the Electron app during deployment.
+The JSON manifest file that sits alongside the zipped CDK project contains a `Stacks` property that describes the stacks that will be tracked by the Electron app during deployment and a `CodeBuildPolicy` property that will be used to create the service role that will be assumed by CodeBuild when it runs the deployment commands. 
+
 
 ``` json
 {
-    "StackNames": [
-        "HelloStack1"
+    "Stacks": [
+        {
+            "name": "HelloStack1",
+            "hasOutputs": false
+        }
     ],
     "CodeBuildPolicy": {
         "Version": "2012-10-17",
