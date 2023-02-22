@@ -16,6 +16,7 @@ class PythonCdkStack(Stack):
         # example resource
         queue = sqs.Queue(
             self, "PythonCdkQueue",
+            encryption: sqs.QueueEncryption.KMS_MANAGED,
             visibility_timeout=Duration.seconds(300),
             removal_policy=cdk.RemovalPolicy.DESTROY
         )
