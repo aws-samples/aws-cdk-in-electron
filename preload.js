@@ -15,12 +15,10 @@ const fs = require("fs");
 const { contextBridge } = require('electron');
 
 const stacks = {};
-// console.log(cdkVersion.DISPLAY_VERSION)
-// console.log(sdk.VERSION)
+
 process.versions['cdk'] = cdkVersion.DISPLAY_VERSION;
 process.versions['sdk'] = sdk.VERSION;
 
-// process.env.ELECTRON_NO_ATTACH_CONSOLE = true;
 //set default region
 const REGION = process.env.AWS_DEFAULT_REGION || 'us-east-1';
 sdk.config.update({ region: REGION });
@@ -356,8 +354,6 @@ async function createCdkAppPipelineStack(account, region, callback) {
   if (fs.existsSync(path.join(rootPath, 'pipeline-assets/codepipeline-service-role-policy.json'))) {
     codepipelinePolicyJson = JSON.parse(fs.readFileSync(path.join(rootPath, 'pipeline-assets/codepipeline-service-role-policy.json'),
       { encoding: 'utf8', flag: 'r' }));
-    // console.log("overriding default codepipeline service role policy");
-    // console.log(codepipelinePolicyJson);
   }
   else {
     console.log("Running CodePipeline as admin - provide a least-privileges codepipeline-service-role-policy.json in the pipeline-assets/ folder of this project.")
@@ -532,15 +528,6 @@ function clearTrackedStacks() {
   }
 }
 contextBridge.exposeInMainWorld('clearTrackedStacks', () => clearTrackedStacks())
-
-
-// /* 
-// * Return the CDK and SDK versions
-// */
-// function reportVersions() {
-//   return cdkVersion.DISPLAY_VERSION
-// }
-// contextBridge.exposeInMainWorld('reportVersions', () => reportVersions())
 
 /*
 * preps the page, from Electron quickstart https://www.electronjs.org/docs/latest/tutorial/quick-start
