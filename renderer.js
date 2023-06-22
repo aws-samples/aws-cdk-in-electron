@@ -12,7 +12,7 @@ let debugMessages = {};
 let bouncyBox = `<span class="la-square-jelly-box la-dark la-sm"><div></div><div></div></span>`;
 
 document.documentElement.setAttribute('data-theme', 'light')
-document.getElementById("create-bucket-with-cdk").value = "electron-cdk-created-bucket-" + Math.random().toString(36).slice(2, 10);
+document.getElementById("create-bucket-with-cdk").value = "electron-bucket-" + Math.random().toString(36).slice(2, 10);
 
 const cfnStates = function (stack, state) {
   let stacks = window.getStacksInProgress();
@@ -102,6 +102,7 @@ const cfnMessages = function (failure, success, stackName) {
       stackName = success.StackId.split('/')[1];
     }
     else {
+      document.getElementById('cf-stack-states').innerHTML = "";
       stackName = "Unknown";
     }
   }
@@ -201,19 +202,22 @@ function getBuckets() {
 }
 
 function bootstrapCdkApp() {
+  document.getElementById('cf-stack-states').innerHTML = bouncyBox;
   window.bootstrapCdk(account, region, cfnMessages);
 }
 
 function createCdkStackFunc() {
+  document.getElementById('cf-stack-states').innerHTML = bouncyBox;
   clearInterval(cfMonitor);
   window.createCdkStack(account, region, document.getElementById("create-bucket-with-cdk").value, cfnMessages);
-  cfMonitor = setInterval(showStacksProgressFunc, 5000);
+  cfMonitor = setInterval(showStacksProgressFunc, 7000);
 }
 
 function createCdkAppPipelineStackFunc() {
+  document.getElementById('cf-stack-states').innerHTML = bouncyBox;
   clearInterval(cfMonitor);
   window.createCdkAppPipelineStack(account, region, cfnMessages);
-  cfMonitor = setInterval(showStacksProgressFunc, 5000);
+  cfMonitor = setInterval(showStacksProgressFunc, 7000);
 }
 
 function populateTemplateSelect() {
@@ -268,15 +272,25 @@ function updateRegion() {
 
 function showStacksProgressFunc() {
   let stacks = window.getStacksInProgress();
-  console.log("checking stack progress for these stacks: " + JSON.stringify(stacks));
-  for (stack in stacks) {
-    window.getStackEvents(stack, cfnStates);
+  if (stacks) {
+    console.log("checking stack progress for these stacks: " + JSON.stringify(stacks));
+    for (stack in stacks) {
+      window.getStackEvents(stack, cfnStates);
+    }
   }
+  else {
+    clearInterval(cfMonitor);
+  }
+}
+
+function clearStackMonitors() {
+  window.clearTrackedStacks();
 }
 
 function openConsole(url) {
   window.openInBrowser(url);
 }
+
 
 populateTemplateSelect();
 
@@ -288,4 +302,5 @@ document.getElementById("bootstrap-cdk-button").addEventListener("click", bootst
 document.getElementById("create-cdk-stack-button").addEventListener("click", createCdkStackFunc);
 document.getElementById("create-cdk-app-pipeline-button").addEventListener("click", createCdkAppPipelineStackFunc);
 document.getElementById("deploy-template-button").addEventListener("click", deployCfnTemplate);
+document.getElementById("clear-stack-monitors").addEventListener("click", clearStackMonitors);
 

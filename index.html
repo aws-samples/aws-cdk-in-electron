@@ -88,6 +88,8 @@ export AWS_SESSION_TOKEN=IQoJb3JpZ2luX2VjEDIa....
             Dynamic CDK App</button></p>
         <p>Dynamically compose CodePipeline pipelines for CDK apps bundled into the Electron app.</p>
         <button id="create-cdk-app-pipeline-button">Create CDK App Pipeline stack</button>
+        <h3>Clear Stack Monitors</h3>
+        <button id="clear-stack-monitors">Clear Stack Monitors</button>
       </div>
     </div>
   </div>
@@ -101,8 +103,9 @@ export AWS_SESSION_TOKEN=IQoJb3JpZ2luX2VjEDIa....
   </div>
 
   <footer style="margin-top: 0px; padding-top: 0px;">This app is using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.</footer>
+    Chromium <span id="chrome-version"></span>, Electron <span id="electron-version"></span>, CDK <span
+      id="cdk-version"></span> &amp;
+    SDK <span id="sdk-version"></span>.</footer>
 
   <!-- You can also require other files to run in this process -->
   <script src="./renderer.js"></script>

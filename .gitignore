@@ -6,3 +6,4 @@ apps/wordpress*
 .vscode
 .github
 apps/*.zip
+electron-fiddle

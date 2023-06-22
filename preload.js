@@ -5,7 +5,9 @@ const sdk = require('aws-sdk');
 const cdk = require('aws-cdk-lib');
 const cxapi = require('@aws-cdk/cx-api')
 const cfDeployments = require('aws-cdk/lib/api/cloudformation-deployments')
+// const cfDeployments = require('aws-cdk/lib/api/deployments')
 const bootstrap = require('aws-cdk/lib/api/bootstrap')
+const cdkVersion = require('aws-cdk/lib/version');
 const SdkProvider = require('aws-cdk/lib/api/aws-auth');
 const { rootPath } = require('electron-root-path');
 const path = require('path');
@@ -13,6 +15,10 @@ const fs = require("fs");
 const { contextBridge } = require('electron');
 
 const stacks = {};
+// console.log(cdkVersion.DISPLAY_VERSION)
+// console.log(sdk.VERSION)
+process.versions['cdk'] = cdkVersion.DISPLAY_VERSION;
+process.versions['sdk'] = sdk.VERSION;
 
 // process.env.ELECTRON_NO_ATTACH_CONSOLE = true;
 //set default region
@@ -108,6 +114,7 @@ function setCredentials(data, callback) {
 }
 
 contextBridge.exposeInMainWorld('setCredentials', (data, cb) => setCredentials(data, cb))
+
 
 /* 
 * Once we have credentials, find the regions that are available to this identity
@@ -274,7 +281,7 @@ const getStackArtifact = (app, stack) => {
 async function createCdkStack(account, region, bucketName, callback) {
 
   let app = new cdk.App()
-  let stackName = 'electron-bucket-stack'
+  let stackName = bucketName + '-stack'
   let stack = new cdk.Stack(app, stackName, {
     env: {
       region: region,
@@ -284,7 +291,7 @@ async function createCdkStack(account, region, bucketName, callback) {
   stacks[stackName] = { hasOutputs: true };
 
   // console.log(sdk.config)
-  let bucket = new cdk.aws_s3.Bucket(stack, 'ElectronBucket', {
+  let bucket = new cdk.aws_s3.Bucket(stack, bucketName.replace(/\-(\w)/g, RegExp.$1.toUpperCase()), {
     removalPolicy: cdk.RemovalPolicy.DESTROY,
     bucketName: bucketName,
     blockPublicAccess: cdk.aws_s3.BlockPublicAccess.BLOCK_ALL,
@@ -515,6 +522,26 @@ async function createCdkAppPipelineStack(account, region, callback) {
 }
 contextBridge.exposeInMainWorld('createCdkAppPipelineStack', (account, region, cb) => createCdkAppPipelineStack(account, region, cb))
 
+
+/* 
+* Reset the UI and list of tracked stacks
+*/
+function clearTrackedStacks() {
+  for (const key in stacks) {
+    delete stacks[key];
+  }
+}
+contextBridge.exposeInMainWorld('clearTrackedStacks', () => clearTrackedStacks())
+
+
+// /* 
+// * Return the CDK and SDK versions
+// */
+// function reportVersions() {
+//   return cdkVersion.DISPLAY_VERSION
+// }
+// contextBridge.exposeInMainWorld('reportVersions', () => reportVersions())
+
 /*
 * preps the page, from Electron quickstart https://www.electronjs.org/docs/latest/tutorial/quick-start
 * Licensed under the MIT License
@@ -526,7 +553,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (element) element.innerText = text
   }
 
-  for (const type of ['chrome', 'node', 'electron']) {
+  for (const type of ['chrome', 'node', 'electron', 'cdk', 'sdk']) {
     replaceText(`${type}-version`, process.versions[type])
   }
 
