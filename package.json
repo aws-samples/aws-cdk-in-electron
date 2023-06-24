@@ -39,7 +39,7 @@
         "electron-squirrel-startup": "^1.0.0",
         "promptly": "^3.2.0",
         "proxy-agent": "^5.0.0",
-        "semver": "6.0.0",
+        "semver": "7.5.2",
         "wrap-ansi": "^7.0.0",
         "yaml": "^1.10.2"
     },
