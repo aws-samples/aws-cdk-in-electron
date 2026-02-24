@@ -1,73 +1,63 @@
 {
-    "name": "aws-electron-sdk-cdk",
-    "version": "1.0.0",
-    "description": "A demonstration of using AWS SDK and AWS CDK inside an Electron application.",
-    "main": "main.js",
-    "scripts": {
-        "start": "electron-forge start",
-        "package": "electron-forge package",
-        "make": "electron-forge make"
-    },
-    "keywords": [
-        "Electron",
-        "AWS",
-        "SDK",
-        "CDK",
-        "PoC"
-    ],
-    "author": "guymor@amazon.com",
-    "license": "",
-    "devDependencies": {
-        "@electron-forge/cli": "^6.0.4",
-        "@electron-forge/maker-deb": "^6.0.4",
-        "@electron-forge/maker-rpm": "^6.0.4",
-        "@electron-forge/maker-squirrel": "^6.0.4",
-        "@electron-forge/maker-zip": "^6.0.4",
-        "electron": "^39.2.1",
-        "electron-rebuild": "^3.2.9"
-    },
-    "dependencies": {
-        "@aws-cdk/cloudformation-diff": "2.79.1",
-        "@aws-cdk/cx-api": "2.79.1",
-        "archiver": "^5.3.1",
-        "aws-cdk": "2.79.1",
-        "aws-cdk-lib": "2.79.1",
-        "aws-sdk": "2.1343.0",
-        "cdk-assets": "^2.33.0",
-        "constructs": "^10.1.43",
-        "electron-root-path": "^1.1.0",
-        "electron-squirrel-startup": "^1.0.0",
-        "promptly": "^3.2.0",
-        "proxy-agent": "^5.0.0",
-        "semver": "6.0.0",
-        "wrap-ansi": "^7.0.0",
-        "yaml": "^1.10.2"
-    },
-    "config": {
-        "forge": {
-            "packagerConfig": {},
-            "makers": [
-                {
-                    "name": "@electron-forge/maker-squirrel",
-                    "config": {
-                        "name": "electron_quick_start"
-                    }
-                },
-                {
-                    "name": "@electron-forge/maker-zip",
-                    "platforms": [
-                        "darwin"
-                    ]
-                },
-                {
-                    "name": "@electron-forge/maker-deb",
-                    "config": {}
-                },
-                {
-                    "name": "@electron-forge/maker-rpm",
-                    "config": {}
-                }
-            ]
-        }
-    }
+  "name": "aws-cloud-starter-kit",
+  "productName": "Cloud Starter Kit",
+  "version": "1.0.4",
+  "description": "An app to help customers deploy solutions on AWS.",
+  "main": "src/scripts/main.js",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "dir": "electron-builder --dir",
+    "dist": "electron-builder",
+    "build": "node esbuild.config.js",
+    "build:dev": "node esbuild.config.js --dev",
+    "build:watch": "node esbuild.config.js --dev --watch",
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "eslint src/**/*.js --fix",
+    "format": "prettier --write \"src/**/*.{js,css,html}\"",
+    "format:check": "prettier --check \"src/**/*.{js,css,html}\"",
+    "update-deps": "node scripts/update-dependencies.js"
+  },
+  "keywords": [
+    "Electron",
+    "AWS",
+    "SDK",
+    "CDK",
+    "CloudFormation",
+    "Starter Kits",
+    "Partners"
+  ],
+  "author": "guymor@amazon.com",
+  "license": "MIT-0",
+  "devDependencies": {
+    "@electron-forge/cli": "^6.4.2",
+    "@electron-forge/maker-dmg": "^6.4.2",
+    "@electron-forge/maker-rpm": "^6.4.2",
+    "@electron-forge/maker-squirrel": "^6.4.2",
+    "@electron-forge/maker-zip": "^6.4.2",
+    "electron": "^41.0.0-beta.5",
+    "esbuild": "^0.27.2",
+    "globals": "^15.9.0",
+    "prettier": "^3.8.1",
+    "uglify-js": "^3.19.3"
+  },
+  "dependencies": {
+    "@aws-sdk/client-bedrock": "^3.840.0",
+    "@aws-sdk/client-cloudformation": "^3.840.0",
+    "@aws-sdk/client-codepipeline": "^3.840.0",
+    "@aws-sdk/client-ec2": "^3.840.0",
+    "@aws-sdk/client-iam": "^3.840.0",
+    "@aws-sdk/client-rds": "^3.840.0",
+    "@aws-sdk/client-route-53": "^3.840.0",
+    "@aws-sdk/client-s3": "^3.840.0",
+    "@aws-sdk/client-ssm": "^3.840.0",
+    "@aws-sdk/client-sts": "^3.840.0",
+    "@aws-sdk/credential-providers": "^3.840.0",
+    "@aws-sdk/lib-storage": "^3.840.0",
+    "electron-root-path": "^1.1.0",
+    "electron-squirrel-startup": "^1.0.1",
+    "js-yaml": "^4.1.0",
+    "jszip": "^3.10.1"
+  }
 }
